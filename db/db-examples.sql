@@ -18,7 +18,7 @@ CREATE TABLE DiaryEntries (
     entry_date DATE NOT NULL,
     mood VARCHAR(50),
     energy_level INT,
-    stress_level INT,  -- ✅ Corrected from "stres_level" to "stress_level"
+    stress_level INT,  
     sleep_hours INT,
     notes TEXT,
     goals TEXT,
@@ -42,7 +42,7 @@ INSERT INTO Users (username, password, email, user_level) VALUES
   ('janedoe', 'temp-pw-2', 'janedoe@example.com', 'admin'),
   ('mike_smith', 'temp-pw-3', 'mike@example.com', 'moderator');
 
--- Inserting diary entry (✅ Fixed column name "stress_level")
+-- Inserting diary entry
 INSERT INTO DiaryEntries (user_id, entry_date, mood, energy_level, stress_level, sleep_hours, notes, goals, created_at) 
 VALUES 
   (1, '2025-01-10', 'Happy', 10, 4, 8, 'Had a great day, felt energetic', 'Save money', '2025-01-10 20:00:00');
