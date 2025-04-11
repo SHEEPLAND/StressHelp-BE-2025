@@ -1,5 +1,8 @@
 import express from 'express';
-import {getMe, login} from '../controllers/auth-controller.js';
+//replaced with kubios 
+
+//import {getMe, login} from '../controllers/auth-controller.js';
+import {getMe, login} from '../controllers/kubios-auth-controller.js';
 import {authenticateToken} from '../middlewares/authentication.js';
 
 const authRouter = express.Router();

@@ -1,9 +1,9 @@
-import {insertEntry, selectEntriesByUserId} from '../models/entry-model.js';
+import {insertEntry, selectEntriesByUserId, deleteEntry} from '../models/entry-model.js';
 
 const postEntry = async (req, res, next) => {
   // user_id, entry_date, mood, sleep_hours, notes
   const newEntry = req.body;
-  newEntry.user_id = req.user.user_id;
+  newEntry.user_id = req.user.userId;
   try {
     await insertEntry(newEntry);
     res.status(201).json({message: "Entry added."});
@@ -19,11 +19,29 @@ const postEntry = async (req, res, next) => {
  */
 const getEntries = async (req, res, next) => {
   try {
-    const entries = await selectEntriesByUserId(req.user.user_id);
+    const entries = await selectEntriesByUserId(req.user.userId);
     res.json(entries);
   } catch (error) {
     next(error);
   }
 };
 
-export {postEntry, getEntries};
+// DELETE Function
+const deleteEntryById = async (req, res, next) => {
+  const entryId = req.params.id;
+  const userId = req.user.userId;
+
+  try {
+    const result = await deleteEntry(entryId, userId);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Entry not found or not authorized" });
+    }
+    res.status(200).json({ message: "Entry deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export { postEntry, getEntries, deleteEntryById };
+

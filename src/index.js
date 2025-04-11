@@ -3,6 +3,7 @@ import cors from 'cors';
 import userRouter from './routes/user-router.js';
 import authRouter from './routes/auth-router.js';
 import entryRouter from './routes/entry-router.js';
+import kubiosRouter from './routes/kubios-router.js';
 import {errorHandler, notFoundHandler} from './middlewares/error-handler.js';
 const hostname = '127.0.0.1';
 const app = express();
@@ -31,6 +32,9 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 // Päiväkirjamerkinnät
 app.use('/api/entries', entryRouter);
+
+// Kubios data endpoints
+app.use('/api/kubios-data', kubiosRouter);
 
 // 404 virheitä varten
 app.use(notFoundHandler);

@@ -29,4 +29,18 @@ const selectEntriesByUserId = async (userId) => {
   }
 };
 
-export {insertEntry, selectEntriesByUserId};
+const deleteEntry = async (entryId, userId) => {
+  try {
+    const [result] = await promisePool.query(
+      'DELETE FROM DiaryEntries WHERE entry_id = ? AND user_id = ?',
+      [entryId, userId]
+    );
+    console.log('deleteEntry', result);
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error('database error');
+  }
+};
+
+export { insertEntry, selectEntriesByUserId, deleteEntry };
