@@ -1,5 +1,5 @@
 import express from 'express';
-import {getEntries, postEntry} from '../controllers/entry-controller.js';
+import {getEntries, postEntry,deleteEntryById} from '../controllers/entry-controller.js';
 import {authenticateToken} from '../middlewares/authentication.js';
 import {body} from 'express-validator';
 import {validationErrorHandler} from '../middlewares/error-handler.js';
@@ -33,5 +33,10 @@ entryRouter
     postEntry,
   )
   .get(authenticateToken, getEntries);
+
+  // DELETE /api/entries/:id
+  entryRouter
+  .route('/:id')
+  .delete(authenticateToken, deleteEntryById); 
 
 export default entryRouter;
