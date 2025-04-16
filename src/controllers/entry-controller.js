@@ -1,4 +1,4 @@
-import {insertEntry, selectEntriesByUserId, deleteEntry} from '../models/entry-model.js';
+import {insertEntry, selectEntriesByUserId, deleteEntry, updateEntryById} from '../models/entry-model.js';
 
 const postEntry = async (req, res, next) => {
   // user_id, entry_date, mood, sleep_hours, notes
@@ -42,6 +42,22 @@ const deleteEntryById = async (req, res, next) => {
   }
 };
 
+const updateEntry = async (req, res, next) => {
+  const entryId = req.params.id;
+  const userId = req.user.userId;
+  const updatedData = req.body;
 
-export { postEntry, getEntries, deleteEntryById };
+  try {
+    const result = await updateEntryById(entryId, userId, updatedData);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Entry not found or not authorized" });
+    }
 
+    res.status(200).json({ message: "Entry updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export { postEntry, getEntries, deleteEntryById, updateEntry };

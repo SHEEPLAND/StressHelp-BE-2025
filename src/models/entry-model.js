@@ -43,4 +43,31 @@ const deleteEntry = async (entryId, userId) => {
   }
 };
 
-export { insertEntry, selectEntriesByUserId, deleteEntry };
+const updateEntryById = async (entryId, userId, updatedData) => {
+  try {
+    const [result] = await promisePool.query(
+      `UPDATE DiaryEntries
+       SET entry_date = ?, mood = ?, energy_level = ?, stress_level = ?, sleep_hours = ?, notes = ?, goals = ?
+       WHERE entry_id = ? AND user_id = ?`,
+      [
+        updatedData.entry_date,
+        updatedData.mood,
+        updatedData.energy_level,
+        updatedData.stress_level,
+        updatedData.sleep_hours,
+        updatedData.notes,
+        updatedData.goals,
+        entryId,
+        userId
+      ]
+    );
+    console.log('updateEntryById', result);
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error('database error');
+  }
+};
+
+
+export { insertEntry, selectEntriesByUserId, deleteEntry, updateEntryById };
