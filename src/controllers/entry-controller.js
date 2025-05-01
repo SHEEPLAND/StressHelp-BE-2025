@@ -5,8 +5,8 @@ const postEntry = async (req, res, next) => {
   const newEntry = req.body;
   newEntry.user_id = req.user.userId;
   try {
-    await insertEntry(newEntry);
-    res.status(201).json({message: "Entry added."});
+    const entry_id = await insertEntry(newEntry);
+    res.status(201).json({message: "Entry added." , entry_id: entry_id});
   } catch (error) {
     next(error);
   }
